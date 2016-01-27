@@ -1,3 +1,3 @@
 require 'require_all'
 
-require_all './lib/models/*.rb'
+require_all './lib/*.rb'
