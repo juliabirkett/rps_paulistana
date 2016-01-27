@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 describe NFE::Header do
-    describe "#new" do
-        it "Receives type and returns Register object" do
-            expect(NFE::Register.new "1").to not_raise_error
-        end
-    end
+    # describe "#valid?" do
+    #     it "return false if the register does not contain required fields" do
+    #         @register = NFE::Register.new "2"
+    #         expect(@register.valid?).to be false
+    #     end
+    #     it "return true if the register contains required fields"
+    # end
 end
