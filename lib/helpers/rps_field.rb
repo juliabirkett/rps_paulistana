@@ -14,6 +14,7 @@ module NFE
                 @name  = name
                 @value = value
                 validate!
+                @value.upcase!
             end
 
             def valid?
