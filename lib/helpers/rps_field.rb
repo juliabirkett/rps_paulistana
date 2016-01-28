@@ -7,6 +7,7 @@ module NFE
             def validate!
                 raise Errors::ParamClassError, /Parameter name must be String or Symbol/   if !@name.is_a?  String and !@name.is_a? Symbol
                 raise Errors::ParamClassError, /Parameter value must be String/            if !@value.is_a? String
+                raise Errors::InvalidParamError                                            if  @name.empty? or @value.empty?
             end
 
             def initialize name, value
