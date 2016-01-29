@@ -60,6 +60,31 @@ module NFE
                 end
             end
 
+            def check_value
+                case @name.to_sym
+                when :layout_version
+                    if !["001", "002"].include? @value
+                        raise Errors::LayoutVersionError, /Only 001 and 002 versions supported/
+                    end
+                when :rps_type
+                    if !@value.strip.eql?("RPS") and !@value.strip.eql?("RPS-M")
+                        raise Errors::RPSTypeError, /RPS types allowed: RPS and RPS-M/
+                    end
+                when :rps_status
+                    if !["T", "F", "A", "B", "M", "N", "X", "V", "P", "C"].include? @value
+                        raise Errors::RPSStatusError, /Invalid RPS situation\/status. Please, check the manual (section 4.3.6)/
+                    end
+                when :iss_by
+                    if !["1", "2", "3"].include? @value
+                        raise Errors::ISSByError, /Invalid ISS. Please, check the manual (section 4.3.11)/
+                    end
+                when :taker_type
+                    if !["1", "2", "3"].include? @value
+                        raise Errors::TakerTypeError, /Invalid Taker type. Please, check the manual (section 4.3.12)/
+                    end
+                end
+            end
+
             def alphanumeric?
                 return @value.match(/^[[:alnum:]\s]+$/) != nil
             end
