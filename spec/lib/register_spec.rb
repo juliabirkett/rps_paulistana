@@ -4,7 +4,7 @@ describe NFE::Register do
     describe "#new" do
         context "with no parameters or more than one parameter" do
             it "raises an ArgumentError" do
-                expect{ NFE::Register.new }.to                        raise_error ArgumentError
+                expect{ NFE::Register.new }                       .to raise_error ArgumentError
                 expect{ NFE::Register.new String.new, String.new }.to raise_error ArgumentError
             end
         end
