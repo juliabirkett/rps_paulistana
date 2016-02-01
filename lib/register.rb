@@ -3,6 +3,8 @@ module NFE
         VALID_TYPES     = [1, 2, 3, 5, 9]
         REQUIRED_FIELDS = []
 
+        attr_reader :fields
+
         def validate!
             if !@type.is_a? String and !@type.is_a? Integer
                 raise Errors::ParamClassError,      /Parameter type must be String or Integer/
@@ -15,11 +17,25 @@ module NFE
 
         def initialize type
             @type = type
+            @fields = Array.new
             validate!
         end
 
         def valid?
-            return (REQUIRED_FIELDS - @fields.keys).empty?
+            return (self.class::REQUIRED_FIELDS - @fields.keys).empty?
+        end
+
+        def << fields
+            raise Errors::InvalidParamError, /Expecting Hash parameter/ if !fields.is_a? Hash
+            fields.each do |name, value|
+                field = Helper::RPSField.new name, value
+                if field.valid?
+                    field.check_value
+                    @fields << field
+                end
+            end
+
+            return @fields
         end
     end
 end
