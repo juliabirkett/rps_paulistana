@@ -34,6 +34,8 @@ module NFE
                 if field.valid?
                     field.check_value
                     @fields[name] = value
+                else
+                    raise Errors::InvalidFieldError, /The field #{@name}; Value: #{@value} is invalid. Check its value/
                 end
             end
 
