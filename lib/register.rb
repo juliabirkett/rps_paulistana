@@ -17,7 +17,7 @@ module NFE
 
         def initialize type
             @type = type
-            @fields = Array.new
+            @fields = Hash.new
             validate!
         end
 
@@ -29,9 +29,10 @@ module NFE
             raise Errors::InvalidParamError, /Expecting Hash parameter/ if !fields.is_a? Hash
             fields.each do |name, value|
                 field = Helper::RPSField.new name, value
+
                 if field.valid?
                     field.check_value
-                    @fields << field
+                    @fields[name] = value
                 end
             end
 
