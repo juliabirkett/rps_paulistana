@@ -28,6 +28,7 @@ module NFE
 
         def << fields
             raise Errors::InvalidParamError, /Expecting Hash parameter/ if !fields.is_a? Hash
+            fields = self.class::DEFAULTS.merge(fields)
             fields.each do |name, value|
                 field = Helper::RPSField.new name, value
 
