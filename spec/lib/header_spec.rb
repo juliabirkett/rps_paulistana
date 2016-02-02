@@ -43,14 +43,16 @@ describe NFE::Header do
         end
     end
 
-    # describe "#valid?" do
-    #     it "return whether the register contains required fields" do
-    #         header = NFE::Header.new
-    #         expect(header.valid?).to be false
-    #         header << {layout_version: "002", municipal_registration: "48815446"}
-    #         expect(header.valid?).to be false
-    #         header << {layout_version: "002", municipal_registration: "48815446", start_date: "20160201", end_date: "20160201"}
-    #         expect(header.valid?).to be true
-    #     end
-    # end
+    describe "#valid?" do
+        it "return whether the register is valid (contains required fields)" do
+            header = NFE::Header.new
+            expect(header.valid?).to be false
+            header << {layout_version: "002", start_date: "20160201", end_date: "20160201"}
+            expect(header.valid?).to be false
+            header << {municipal_registration: "48815400"}
+            expect(header.valid?).to be true
+            header << {layout_version: "001", municipal_registration: "48815446", start_date: "20160201", end_date: "20160201"}
+            expect(header.valid?).to be true
+        end
+    end
 end
