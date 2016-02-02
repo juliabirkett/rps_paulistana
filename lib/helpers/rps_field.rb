@@ -57,6 +57,8 @@ module NFE
                     self.alphanumeric? and self.length == 2
                 when :service_description
                     self.alphanumeric?
+                else
+                    raise Errors::NonExistentFieldError, /The field #{@name}; Value: #{@value} doesn't exist/
                 end
             end
 
