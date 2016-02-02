@@ -1,5 +1,4 @@
-class NFe
-    def initialize
-        puts "HI"
+module NFE
+    class Issuer
     end
 end
