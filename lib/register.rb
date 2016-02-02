@@ -2,6 +2,7 @@ module NFE
     class Register
         VALID_TYPES     = [1, 2, 3, 5, 9]
         REQUIRED_FIELDS = []
+        DEFAULTS  = {}
 
         attr_reader :fields
 
