@@ -35,8 +35,9 @@ describe NFE::Header do
 
             context "with valid fields" do
                 it "returns a populated Hash of field name/value" do
-                    expect((NFE::Header::new << {layout_version: "002", municipal_registration: "48815446"}).empty?).to be false
-                    expect( NFE::Header::new << {layout_version: "002", municipal_registration: "48815446"})        .to be_an Hash
+                    expect((NFE::Header::new << {municipal_registration: "48815446"}).empty?)                       .to be false
+                    expect((NFE::Header::new << {layout_version: "001", municipal_registration: "48815446"}).empty?).to be false
+                    expect((NFE::Header::new << {layout_version: "002", municipal_registration: "00000002"}).empty?).to be false
                 end
             end
         end
