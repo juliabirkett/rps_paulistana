@@ -37,7 +37,7 @@ module NFE
                     self.fill_with! " ", 5 and self.alphanumeric?
                 when :layout_version
                     self.numeric? and self.length == 3
-                when :municipal_registration, :date, :taker_ccm, :zip_code
+                when :municipal_registration, :start_date, :end_date, :taker_ccm, :zip_code
                     self.numeric? and self.length == 8
                 when :rps_number, :cei
                     self.numeric? and self.length == 12
