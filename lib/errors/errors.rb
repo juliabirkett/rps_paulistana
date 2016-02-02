@@ -8,5 +8,7 @@ module NFE
         class RPSStatusError       < StandardError; end
         class ISSByError           < StandardError; end
         class TakerTypeError       < StandardError; end
+        class NonExistentFieldError< StandardError; end
+        class InvalidFieldError    < StandardError; end
     end
 end
