@@ -33,6 +33,14 @@ describe NFE::Header do
                 end
             end
 
+            context "with invalid field value (when the field has values restrictions)" do
+                context "when :layout_version" do
+                    it "raises LayoutVersionError" do
+                        expect{(NFE::Header::new << {layout_version: "003"})}.to raise_error NFE::Errors::LayoutVersionError
+                    end
+                end
+            end
+
             context "with valid fields" do
                 it "returns a populated Hash of field name/value" do
                     expect((NFE::Header::new << {municipal_registration: "48815446"}).empty?)                       .to be false

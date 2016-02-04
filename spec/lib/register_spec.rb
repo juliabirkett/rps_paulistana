@@ -16,8 +16,8 @@ describe NFE::Register do
         end
 
         context "with an invalid parameter type class" do
-            it "raises ParamClassError" do
-                expect{ NFE::Register.new :param }.to raise_error NFE::Errors::ParamClassError, /Parameter type must be String or Integer/
+            it "raises InvalidParamError" do
+                expect{ NFE::Register.new :param }.to raise_error NFE::Errors::InvalidParamError, /Parameter type must be String or Integer/
             end
         end
 
