@@ -14,8 +14,9 @@ module NFE
         end
 
         def add_detail fields
-            detail = Detail.new << fields
-            @details << detail
+            detail = Detail.new
+            detail << fields
+            @details << detail if detail.valid?
             return detail.valid?
         end
 
