@@ -122,6 +122,7 @@ describe NFE::RPSField do
                 expect((NFE::RPSField.new :municipal_registration, "4881aaa5446").valid?)   .to be false
                 expect((NFE::RPSField.new :taker_name, "FERNANDO FARIA DE SOUZ!!@A").valid?).to be false
                 expect((NFE::RPSField.new :service_description, "!!!! 99motos").valid?)     .to be false
+                expect((NFE::RPSField.new :taker_email, "julia.birkett").valid?)            .to be false
             end
         end
     end

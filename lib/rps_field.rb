@@ -6,6 +6,7 @@ module NFE
         module Type
             ALPHA = "ALPHA"
             NUM   = "NUM"
+            EMAIL = "EMAIL"
         end
 
         def validate!
@@ -28,6 +29,7 @@ module NFE
             case @name
             when :taker_email
                 @size = 75
+                @type = Type::EMAIL
             when :aliquot
                 @size = 4
                 @type = Type::NUM
@@ -104,6 +106,8 @@ module NFE
             char = " "
             if @type.eql? Type::ALPHA
                 valid = self.alphanumeric?
+            elsif @type.eql? Type::EMAIL
+                valid = self.email?
             elsif @type.eql? Type::NUM
                 valid = self.numeric?
                 char = "0"
@@ -146,6 +150,10 @@ module NFE
 
         def numeric?
             return @value.match(/^[0-9]+$/) != nil
+        end
+
+        def email?
+            return @value.match(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i) != nil
         end
 
         def length
