@@ -25,5 +25,25 @@ module NFE
         def initialize
             super 6
         end
+
+        def valid?
+            if @fields[:taker_type].eql? "2"
+                REQUIRED_FIELDS.concat([
+                    :taker_name,
+                    :address_type,
+                    :address,
+                    :address_number,
+                    :district,
+                    :city,
+                    :uf
+                ])
+            end
+
+            if ["F", "B", "N", "V"].include?(@fields[:rps_status])
+                REQUIRED_FIELDS << :city_ibge_code
+            end
+
+            super
+        end
     end
 end
