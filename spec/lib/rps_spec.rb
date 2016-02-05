@@ -43,7 +43,11 @@ describe NFE::RPS do
                     expect((NFE::RPS.new).add_header({end_date: "20161220"})).to be false
                     expect((NFE::RPS.new).add_header({municipal_registration: "12345678"})).to be true
                     expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", start_date: "20161220"})).to be true
-                    expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", start_date: "20161220", end_date: "20162123"})).to be true
+                    expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", start_date: "20161220", end_date: "20161223"})).to be true
+                end
+            end
+        end
+    end
 
     describe "#add_detail" do
         context "with invalid parameter" do
