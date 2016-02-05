@@ -23,8 +23,28 @@ describe NFE::RPS do
         end
 
         context "with valid parameter" do
-            it "returns a populated Hash" do
-                expect((NFE::RPS.new).add_header({layout_version: "003"}))
+            context "with nonexistent field name" do
+                it "raises NonExistentFieldError" do
+                    expect{(NFE::RPS.new).add_header({troubles: "whatever"})}.to raise_error NFE::Errors::NonExistentFieldError
+                end
+            end
+
+            context "with invalid field value" do
+                it "raises an Error" do
+                    expect{(NFE::RPS.new).add_header({layout_version: "003"})}.to raise_error NFE::Errors::LayoutVersionError
+                end
+            end
+
+            context "with valid field" do
+                it "returns whether the header was added" do
+                    expect{(NFE::RPS.new).add_header({layout_version: "002"})}.to_not raise_error
+                    expect((NFE::RPS.new).add_header({layout_version: "002"})).to be false
+                    expect((NFE::RPS.new).add_header({start_date: "20161220"})).to be false
+                    expect((NFE::RPS.new).add_header({end_date: "20161220"})).to be false
+                    expect((NFE::RPS.new).add_header({municipal_registration: "12345678"})).to be true
+                    expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", start_date: "20161220"})).to be true
+                    expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", start_date: "20161220", end_date: "20162123"})).to be true
+                end
             end
         end
     end
