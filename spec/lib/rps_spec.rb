@@ -42,8 +42,10 @@ describe NFE::RPS do
                     expect((NFE::RPS.new).add_header({start_date: "20161220"})).to be false
                     expect((NFE::RPS.new).add_header({end_date: "20161220"})).to be false
                     expect((NFE::RPS.new).add_header({municipal_registration: "12345678"})).to be true
-                    expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", start_date: "20161220"})).to be true
-                    expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", start_date: "20161220", end_date: "20161223"})).to be true
+                    expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", \
+                        start_date: "20161220"})).to be true
+                    expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", \
+                        start_date: "20161220", end_date: "20161223"})).to be true
                 end
             end
         end
@@ -60,8 +62,7 @@ describe NFE::RPS do
             context "with nonexistent field name" do
                 it "raises NonExistentFieldError" do
                     expect{(NFE::RPS.new).add_detail({troubles: "whatever"})}              .to raise_error NFE::Errors::NonExistentFieldError
-                    expect{(NFE::RPS.new).add_detail({municipal_registration: "12345678"})}.to raise_error NFE::Errors::NonExistentFieldError
-                    expect{(NFE::RPS.new).add_detail({layout_version: "003"})}.to raise_error NFE::Errors::NonExistentFieldError
+                    expect{(NFE::RPS.new).add_detail({layout_version: "003"})}             .to raise_error NFE::Errors::NonExistentFieldError
                 end
             end
 
@@ -76,14 +77,50 @@ describe NFE::RPS do
 
             context "with valid field" do
                 it "returns whether the header was added" do
-                    expect{(NFE::RPS.new).add_detail({layout_version: "002"})}.to_not raise_error
-                    expect((NFE::RPS.new).add_detail({layout_version: "002"})).to be false
-                    expect((NFE::RPS.new).add_detail({start_date: "20161220"})).to be false
-                    expect((NFE::RPS.new).add_detail({end_date: "20161220"})).to be false
-                    expect((NFE::RPS.new).add_detail({municipal_registration: "12345678"})).to be true
-                    expect((NFE::RPS.new).add_detail({layout_version: "002", municipal_registration: "12345678", start_date: "20161220"})).to be true
-                    expect((NFE::RPS.new).add_detail({layout_version: "002", municipal_registration: "12345678", start_date: "20161220", end_date: "20162123"})).to be true
+                    true_hash = {
+                        rps_number: "1",
+                        amount: "1000",
+                        tax_amount: "0",
+                        service_code: "12345",
+                        aliquot: "0",
+                        iss_by: "1",
+                        taker_type: "1",
+                        taker_document: "43896729837"
+                    }
+                    false_hash = {
+                        rps_number: "2",
+                        amount: "10"
+                    }
+                    expect((NFE::RPS.new).add_detail({}))        .to be false
+                    expect((NFE::RPS.new).add_detail(true_hash)) .to be true
+                    expect((NFE::RPS.new).add_detail(false_hash)).to be false
                 end
+            end
+        end
+    end
+
+    describe "#set_footer" do
+        context "with parameters" do
+            it "raises an ArgumentError" do
+                expect{(NFE::RPS.new).set_footer({field: "ba"})}.to raise_error ArgumentError
+            end
+        end
+
+        context "without parameters" do
+            it "returns whether the Footer is valid" do
+                detail = {
+                    rps_number: "1",
+                    amount: "1000",
+                    tax_amount: "0",
+                    service_code: "12345",
+                    aliquot: "0",
+                    iss_by: "1",
+                    taker_type: "2",
+                    taker_document: "43896729837"
+                }
+                rps = NFE::RPS.new
+                rps.add_detail detail
+                expect(rps.set_footer).to be true
             end
         end
     end

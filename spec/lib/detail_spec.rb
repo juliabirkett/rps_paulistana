@@ -96,6 +96,17 @@ describe NFE::Detail do
                 taker_document: "43896729837",
                 rps_status: "A"
             }
+            #false because taker_type is 2 and requires more fields
+            expect(detail.valid?).to be false
+            detail << {
+                taker_name: "Julia Birkett",
+                address_type: "AV",
+                address: "Maranhao",
+                address_number: "600",
+                district: "Higienopolis",
+                city: "Sao Paulo",
+                uf: "SP"
+            }
             expect(detail.valid?).to be true
         end
     end
