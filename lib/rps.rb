@@ -10,14 +10,18 @@ module NFE
 
         def add_header fields
             @header << fields
+            return @header.valid?
         end
 
         def add_detail fields
-            @details << (Detail.new << fields)
+            detail = Detail.new << fields
+            @details << detail
+            return detail.valid?
         end
 
         def add_footer fields
             @footer << fields
+            return @footer.valid?
         end
 
         def string
