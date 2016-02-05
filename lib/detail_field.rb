@@ -5,6 +5,8 @@ module NFE
             :aliquot,
             :taker_document,
             :amount,
+            :municipal_registration,
+            :state_registration,
             :tax_amount,
             :rps_number,
             :taker_name,
@@ -28,7 +30,12 @@ module NFE
             :city_ibge_code,
             :rps_status,
             :uf,
-            :service_description
+            :service_description,
+            :pis_pasep,
+            :cofins,
+            :inss,
+            :ir,
+            :cssl
         ]
 
         def initialize name, value

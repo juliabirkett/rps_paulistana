@@ -39,7 +39,7 @@ module NFE
             when :taker_document
                 @size = 14
                 @type = Type::NUM
-            when :amount, :tax_amount, :total_amount, :total_tax_amount
+            when :amount, :tax_amount, :total_amount, :total_tax_amount, :pis_pasep, :cofins, :inss, :ir, :cssl
                 @size = 15
                 @type = Type::NUM
             when :rps_number
@@ -74,7 +74,7 @@ module NFE
                 @size = 8
                 @type = Type::NUM
                 @auto_fill = false
-            when :cei
+            when :state_registration, :cei
                 @size = 12
                 @type = Type::NUM
                 @auto_fill = false
