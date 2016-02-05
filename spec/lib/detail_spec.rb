@@ -56,6 +56,11 @@ describe NFE::Detail do
                         expect{(NFE::Detail::new << {taker_type: "5"})}  .to raise_error NFE::Errors::TakerTypeError
                     end
                 end
+                context "when :issuing_date" do
+                    it "raises an ArgumentError" do
+                        expect{(NFE::Detail.new << {issuing_date: "20166502"})}.to raise_error ArgumentError, /invalid date/
+                    end
+                end
             end
 
             context "with valid fields" do

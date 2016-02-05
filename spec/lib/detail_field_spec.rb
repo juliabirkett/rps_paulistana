@@ -74,19 +74,21 @@ describe NFE::DetailField do
     describe "#check_value" do
         context "with invalid field value" do
             it "raises an Error" do
-                expect{ (NFE::DetailField.new :rps_type, "100").check_value }  .to raise_error NFE::Errors::RPSTypeError
-                expect{ (NFE::DetailField.new :rps_status, "100").check_value }.to raise_error NFE::Errors::RPSStatusError
-                expect{ (NFE::DetailField.new :iss_by, "100").check_value }    .to raise_error NFE::Errors::ISSByError
-                expect{ (NFE::DetailField.new :taker_type, "100").check_value }.to raise_error NFE::Errors::TakerTypeError
+                expect{ (NFE::DetailField.new :rps_type, "100").check_value }         .to raise_error NFE::Errors::RPSTypeError
+                expect{ (NFE::DetailField.new :rps_status, "100").check_value }       .to raise_error NFE::Errors::RPSStatusError
+                expect{ (NFE::DetailField.new :iss_by, "100").check_value }           .to raise_error NFE::Errors::ISSByError
+                expect{ (NFE::DetailField.new :taker_type, "100").check_value }       .to raise_error NFE::Errors::TakerTypeError
+                expect{ (NFE::DetailField.new :issuing_date, "20162908").check_value }.to raise_error ArgumentError, /invalid date/
             end
         end
 
         context "with valid field value" do
             it "do not raise Error" do
-                expect{ (NFE::DetailField.new :rps_type, "RPS").check_value }.to_not raise_error
-                expect{ (NFE::DetailField.new :rps_status, "F").check_value }.to_not raise_error
-                expect{ (NFE::DetailField.new :iss_by, "1").check_value }    .to_not raise_error
-                expect{ (NFE::DetailField.new :taker_type, "3").check_value }.to_not raise_error
+                expect{ (NFE::DetailField.new :rps_type, "RPS").check_value }         .to_not raise_error
+                expect{ (NFE::DetailField.new :rps_status, "F").check_value }         .to_not raise_error
+                expect{ (NFE::DetailField.new :iss_by, "1").check_value }             .to_not raise_error
+                expect{ (NFE::DetailField.new :taker_type, "3").check_value }         .to_not raise_error
+                expect{ (NFE::DetailField.new :issuing_date, "20160108").check_value }.to_not raise_error
             end
         end
     end

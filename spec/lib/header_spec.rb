@@ -37,15 +37,16 @@ describe NFE::Header do
                 context "when :layout_version" do
                     it "raises LayoutVersionError" do
                         expect{(NFE::Header::new << {layout_version: "003"})}.to raise_error NFE::Errors::LayoutVersionError
+                        expect{(NFE::Header::new << {start_date: "20162908", end_date: "20162908"})}.to raise_error ArgumentError, /invalid date/
                     end
                 end
             end
 
             context "with valid fields" do
                 it "returns a populated Hash of field name/value" do
-                    expect((NFE::Header::new << {municipal_registration: "48815446"}).empty?)                       .to be false
-                    expect((NFE::Header::new << {layout_version: "001", municipal_registration: "48815446"}).empty?).to be false
-                    expect((NFE::Header::new << {layout_version: "002", municipal_registration: "00000002"}).empty?).to be false
+                    expect((NFE::Header::new << {municipal_registration: "48815446", start_date: "20160506"}).empty?).to be false
+                    expect((NFE::Header::new << {layout_version: "001", municipal_registration: "48815446"}).empty?) .to be false
+                    expect((NFE::Header::new << {layout_version: "002", municipal_registration: "00000002"}).empty?) .to be false
                 end
             end
         end

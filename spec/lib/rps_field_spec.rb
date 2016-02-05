@@ -35,21 +35,27 @@ describe NFE::RPSField do
     describe "#check_value" do
         context "with invalid field value" do
             it "raises an Error" do
-                expect{ (NFE::RPSField.new :layout_version, "100").check_value }.to raise_error NFE::Errors::LayoutVersionError
-                expect{ (NFE::RPSField.new :rps_type, "JUL").check_value }      .to raise_error NFE::Errors::RPSTypeError
-                expect{ (NFE::RPSField.new :rps_status, "Z").check_value }      .to raise_error NFE::Errors::RPSStatusError
-                expect{ (NFE::RPSField.new :iss_by, "0").check_value }          .to raise_error NFE::Errors::ISSByError
-                expect{ (NFE::RPSField.new :taker_type, "0").check_value }      .to raise_error NFE::Errors::TakerTypeError
+                expect{ (NFE::RPSField.new :layout_version, "100").check_value }   .to raise_error NFE::Errors::LayoutVersionError
+                expect{ (NFE::RPSField.new :rps_type, "JUL").check_value }         .to raise_error NFE::Errors::RPSTypeError
+                expect{ (NFE::RPSField.new :rps_status, "Z").check_value }         .to raise_error NFE::Errors::RPSStatusError
+                expect{ (NFE::RPSField.new :iss_by, "0").check_value }             .to raise_error NFE::Errors::ISSByError
+                expect{ (NFE::RPSField.new :taker_type, "0").check_value }         .to raise_error NFE::Errors::TakerTypeError
+                expect{ (NFE::RPSField.new :start_date, "20162908").check_value }  .to raise_error ArgumentError, /invalid date/
+                expect{ (NFE::RPSField.new :end_date, "20162908").check_value }    .to raise_error ArgumentError, /invalid date/
+                expect{ (NFE::RPSField.new :issuing_date, "20162908").check_value }.to raise_error ArgumentError, /invalid date/
             end
         end
 
         context "with valid field value" do
             it "do not raise Error" do
-                expect{ (NFE::RPSField.new :layout_version, "001").check_value }.to_not raise_error
-                expect{ (NFE::RPSField.new :rps_type, "RPS").check_value }      .to_not raise_error
-                expect{ (NFE::RPSField.new :rps_status, "T").check_value }      .to_not raise_error
-                expect{ (NFE::RPSField.new :iss_by, "1").check_value }          .to_not raise_error
-                expect{ (NFE::RPSField.new :taker_type, "2").check_value }      .to_not raise_error
+                expect{ (NFE::RPSField.new :layout_version, "001").check_value }   .to_not raise_error
+                expect{ (NFE::RPSField.new :rps_type, "RPS").check_value }         .to_not raise_error
+                expect{ (NFE::RPSField.new :rps_status, "T").check_value }         .to_not raise_error
+                expect{ (NFE::RPSField.new :iss_by, "1").check_value }             .to_not raise_error
+                expect{ (NFE::RPSField.new :taker_type, "2").check_value }         .to_not raise_error
+                expect{ (NFE::RPSField.new :start_date, "20160108").check_value }  .to_not raise_error
+                expect{ (NFE::RPSField.new :end_date, "20160108").check_value }    .to_not raise_error
+                expect{ (NFE::RPSField.new :issuing_date, "20160108").check_value }.to_not raise_error
             end
         end
     end

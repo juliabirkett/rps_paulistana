@@ -135,6 +135,8 @@ module NFE
                 if !["1", "2", "3"].include? @value
                     raise Errors::TakerTypeError, /Invalid Taker type. Please, check the manual (section 4.3.12)/
                 end
+            when :start_date, :end_date, :issuing_date
+                Date.strptime(@value, "%Y%m%d")
             end
         end
 

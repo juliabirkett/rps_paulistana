@@ -50,13 +50,17 @@ describe NFE::HeaderField do
     describe "#check_value" do
         context "with invalid field value" do
             it "raises an Error" do
-                expect{ (NFE::HeaderField.new :layout_version, "100").check_value }.to raise_error NFE::Errors::LayoutVersionError
+                expect{ (NFE::HeaderField.new :layout_version, "100").check_value } .to raise_error NFE::Errors::LayoutVersionError
+                expect{ (NFE::HeaderField.new :start_date, "20162908").check_value }.to raise_error ArgumentError, /invalid date/
+                expect{ (NFE::HeaderField.new :end_date, "20162908").check_value }  .to raise_error ArgumentError, /invalid date/
             end
         end
 
         context "with valid field value" do
             it "do not raise Error" do
-                expect{ (NFE::HeaderField.new :layout_version, "001").check_value }.to_not raise_error
+                expect{ (NFE::HeaderField.new :layout_version, "001").check_value } .to_not raise_error
+                expect{ (NFE::HeaderField.new :start_date, "20160108").check_value }.to_not raise_error
+                expect{ (NFE::HeaderField.new :end_date, "20160108").check_value }  .to_not raise_error
             end
         end
     end
