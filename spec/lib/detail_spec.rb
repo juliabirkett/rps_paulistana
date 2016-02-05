@@ -74,18 +74,18 @@ describe NFE::Detail do
 
     describe "#valid?" do
         it "return whether the register is valid (contains required fields)" do
-            header = NFE::Detail.new
-            expect(header.valid?).to be false
-            header << {aliquot: "002", taker_type: "1", taker_document: "43896729837"}
-            expect(header.valid?).to be false
-            header << {rps_number: "1", amount: "100", tax_amount: "0", service_code: "06298"}
-            expect(header.valid?).to be false
-            header << {iss_by: "1"}
-            expect(header.valid?).to be true
+            detail = NFE::Detail.new
+            expect(detail.valid?).to be false
+            detail << {aliquot: "002", taker_type: "1", taker_document: "43896729837"}
+            expect(detail.valid?).to be false
+            detail << {rps_number: "1", amount: "100", tax_amount: "0", service_code: "06298"}
+            expect(detail.valid?).to be false
+            detail << {iss_by: "1"}
+            expect(detail.valid?).to be true
 
             #using DEFAUTLS
-            header = NFE::Detail.new
-            header << {
+            detail = NFE::Detail.new
+            detail << {
                 rps_number: "2",
                 amount: "1",
                 tax_amount: "0",
@@ -96,7 +96,7 @@ describe NFE::Detail do
                 taker_document: "43896729837",
                 rps_status: "A"
             }
-            expect(header.valid?).to be true
+            expect(detail.valid?).to be true
         end
     end
 end
