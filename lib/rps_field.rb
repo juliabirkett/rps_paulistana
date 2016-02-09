@@ -13,6 +13,7 @@ module NFE
             raise Errors::InvalidParamError, /Parameter name must be String or Symbol/  if !@name .is_a? String and !@name.is_a? Symbol
             raise Errors::InvalidParamError, /Parameter value must be String/           if !@value.is_a? String
             raise Errors::InvalidParamError                                             if  @name.empty? or @value.empty?
+            raise Errors::NonExistentFieldError, /Register: #{self.class}; Name: #{@name}; Value: #{@value}/         if !self.class::VALID_NAMES.include?(@name.to_sym)
         end
 
         def initialize name, value

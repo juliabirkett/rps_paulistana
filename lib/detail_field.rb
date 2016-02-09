@@ -37,10 +37,5 @@ module NFE
             :ir,
             :cssl
         ]
-
-        def initialize name, value
-            super
-            raise Errors::NonExistentFieldError, /Register: #{self.class}; Name: #{@name}; Value: #{@value}/         if !self.class::VALID_NAMES.include?(@name.to_sym)
-        end
     end
 end
