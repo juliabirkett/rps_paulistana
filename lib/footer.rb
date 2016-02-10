@@ -6,6 +6,8 @@ module NFE
             :total_tax_amount
         ]
 
+        VALID_FIELDS = REQUIRED_FIELDS
+
         DEFAULTS = {
             total_detail_lines: "0"
         }

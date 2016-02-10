@@ -6,7 +6,9 @@ module NFE
             :start_date,
             :end_date
         ]
-        
+
+        VALID_FIELDS = REQUIRED_FIELDS
+
         DEFAULTS = {
             layout_version: "002",
             start_date: Time.now.to_date.strftime("%Y%m%d"),
