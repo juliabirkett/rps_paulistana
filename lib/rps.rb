@@ -16,7 +16,7 @@ module NFE
         def add_detail fields
             detail = Detail.new
             detail << fields
-            @details << detail if detail.valid?
+            @details << detail  if detail.valid?
             return detail.valid?
         end
 
@@ -32,7 +32,7 @@ module NFE
             return @footer.valid?
         end
 
-        def string
+        def to_s
         end
 
         def save_to_file
