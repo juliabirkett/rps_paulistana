@@ -59,4 +59,12 @@ describe NFE::Footer do
             expect(footer.valid?).to be true
         end
     end
+
+    describe "#to_s" do
+        it "returns a String" do
+            footer = NFE::Footer.new
+            footer << {total_amount: "0", total_tax_amount: "9"}
+            expect(footer.to_s).to be_an String
+        end
+    end
 end

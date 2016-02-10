@@ -124,4 +124,8 @@ describe NFE::RPS do
             end
         end
     end
+
+    describe "#to_s" do
+        
+    end
 end

@@ -64,4 +64,12 @@ describe NFE::Header do
             expect(header.valid?).to be true
         end
     end
+
+    describe "#to_s" do
+        it "returns a String" do
+            header = NFE::Header.new
+            header << {municipal_registration: "48815400"}
+            expect(header.to_s).to be_an String
+        end
+    end
 end
