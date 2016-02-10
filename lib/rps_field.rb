@@ -1,7 +1,6 @@
 module NFE
     class RPSField
         attr_reader :name, :value, :type, :size, :auto_fill
-        VALID_NAMES = []
 
         module Type
             ALPHA = "ALPHA"
@@ -13,7 +12,6 @@ module NFE
             raise Errors::InvalidParamError, /Parameter name must be String or Symbol/  if !@name .is_a? String and !@name.is_a? Symbol
             raise Errors::InvalidParamError, /Parameter value must be String/           if !@value.is_a? String
             raise Errors::InvalidParamError                                             if  @name.empty? or @value.empty?
-            raise Errors::NonExistentFieldError, /Register: #{self.class}; Name: #{@name}; Value: #{@value}/         if !self.class::VALID_NAMES.include?(@name.to_sym)
         end
 
         def initialize name, value
@@ -43,7 +41,7 @@ module NFE
             when :amount, :tax_amount, :total_amount, :total_tax_amount, :pis_pasep, :cofins, :inss, :ir, :cssl
                 @size = 15
                 @type = Type::NUM
-            when :rps_number
+            when :rps_number, :matriculation
                 @size = 12
                 @type = Type::NUM
             when :taker_name
