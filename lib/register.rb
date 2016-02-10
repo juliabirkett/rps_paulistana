@@ -43,5 +43,14 @@ module NFE
 
             return @fields
         end
+
+        def to_s
+            string = @type.to_s
+            self.class::VALID_FIELDS.each do |field_name|
+                string += @fields[field_name]
+            end
+
+            string
+        end
     end
 end
