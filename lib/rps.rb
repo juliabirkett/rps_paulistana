@@ -33,6 +33,11 @@ module NFE
         end
 
         def to_s
+            puts @header.to_s
+            @details.each do |detail|
+                puts detail.to_s
+            end
+            puts @footer.to_s
         end
 
         def save_to_file
