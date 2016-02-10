@@ -2,6 +2,7 @@ module NFE
     class Register
         VALID_TYPES     = [1, 6, 9]
         REQUIRED_FIELDS = []
+        VALID_FIELDS    = []
         DEFAULTS  = {}
 
         attr_reader :fields
@@ -27,18 +28,27 @@ module NFE
             return (self.class::REQUIRED_FIELDS - @fields.keys).empty?
         end
 
+        def valid_register_field? name
+            return (self.class::VALID_FIELDS).include?(name)
+        end
+
         def << fields
             raise Errors::InvalidParamError, /Expecting Hash parameter/ if !fields.is_a? Hash
             fields = self.class::DEFAULTS.merge(fields)
             fields.each do |name, value|
-                field = Object.const_get("#{self.class}Field").new name, value
+                if valid_register_field?(name)
+                    field = RPSField.new name, value
 
-                if field.valid?
-                    field.check_value
-                    @fields[name] = value
+                    if field.valid?
+                        field.check_value
+                        @fields[name] = value
+                    else
+                        raise Errors::InvalidFieldError, /The field #{name}; Value: #{value} is invalid. Check its value/
+                    end
                 else
-                    raise Errors::InvalidFieldError, /The field #{name}; Value: #{value} is invalid. Check its value/
+                    raise Errors::NonExistentFieldError, /Register: #{self.class}; Name: #{name}; Value: #{value}/
                 end
+
             end
 
             return @fields
