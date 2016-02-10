@@ -5,6 +5,7 @@ module NFE
         DEFAULTS  = {}
 
         attr_reader :fields
+        attr_reader :type
 
         def validate!
             if !@type.is_a? String and !@type.is_a? Integer
