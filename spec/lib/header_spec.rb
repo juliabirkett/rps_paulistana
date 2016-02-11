@@ -65,10 +65,18 @@ describe NFE::Header do
         end
     end
 
+    describe "#to_hash" do
+        it "returns an Hash" do
+            header = NFE::Header.new
+            header << {layout_version: "001", municipal_registration: "18815400"}
+            expect(header.to_hash).to be_an Hash
+        end
+    end
+
     describe "#to_s" do
         it "returns a String" do
             header = NFE::Header.new
-            header << {municipal_registration: "48815400"}
+            header << {layout_version: "001"}
             expect(header.to_s).to be_an String
         end
     end

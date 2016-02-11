@@ -108,6 +108,20 @@ describe NFE::Detail do
                 uf: "SP"
             }
             expect(detail.valid?).to be true
+
+            detail = NFE::Detail.new
+            detail << {
+                rps_number: "2",
+                amount: "1",
+                tax_amount: "0",
+                service_code: "06298",
+                aliquot: "0",
+                iss_by: "1",
+                taker_type: "1",
+                taker_document: "43896729837",
+                rps_status: "B"
+            }
+            expect(detail.valid?).to be false
         end
     end
 end

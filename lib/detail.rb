@@ -66,23 +66,24 @@ module NFE
         end
 
         def valid?
-            if @fields[:taker_type].eql? "2"
-                REQUIRED_FIELDS.concat([
-                    :taker_name,
-                    :address_type,
-                    :address,
-                    :address_number,
-                    :district,
-                    :city,
-                    :uf
-                ])
-            end
+            fields_hash = self.to_hash
+            if fields_hash[:taker_type].eql? "2"
+               REQUIRED_FIELDS.concat([
+                   :taker_name,
+                   :address_type,
+                   :address,
+                   :address_number,
+                   :district,
+                   :city,
+                   :uf
+               ])
+           end
 
-            if ["F", "B", "N", "V"].include?(@fields[:rps_status])
-                REQUIRED_FIELDS << :city_ibge_code
-            end
+           if ["F", "B", "N", "V"].include?(fields_hash[:rps_status])
+               REQUIRED_FIELDS << :city_ibge_code
+           end
 
-            super
+           super
         end
     end
 end
