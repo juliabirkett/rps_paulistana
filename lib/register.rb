@@ -25,6 +25,7 @@ module NFE
         end
 
         def valid?
+            set_non_filled
             return (self.class::REQUIRED_FIELDS - self.to_hash.keys).empty?
         end
 
@@ -44,15 +45,28 @@ module NFE
                         field.check_value
                         @fields << field
                     else
-                        raise Errors::InvalidFieldError, /The field #{name}; Value: #{value} is invalid. Check its value/
+                        raise Errors::InvalidFieldError, /The field #{field.name}; Value: #{field.value} is invalid. Check its value/
                     end
                 else
                     raise Errors::NonExistentFieldError, /Register: #{self.class}; Name: #{name}; Value: #{value}/
                 end
-
             end
 
             return @fields
+        end
+
+        private def set_non_filled
+            non_filled = (self.class::VALID_FIELDS - self.class::REQUIRED_FIELDS) - self.to_hash.keys
+
+            non_filled.each do |field_name|
+                field = RPSField.new field_name
+                if field.valid?
+                    field.check_value
+                    @fields << field
+                else
+                    raise Errors::InvalidFieldError, /The field #{field.name}; Value: #{field.value} is invalid. Check its value/
+                end
+            end
         end
 
         def to_hash
@@ -64,13 +78,14 @@ module NFE
             return fields_hash
         end
 
-        # def to_s
-        #     string = @type.to_s
-        #     self.class::VALID_FIELDS.each do |field_name|
-        #         string += [field_name]
-        #     end
-        #
-        #     string
-        # end
+        def to_s
+            raise Errors::InvalidRegisterError, /The register could not be converted to String because it is not valid/     if !self.valid?
+            string = @type.to_s
+            self.to_hash.each do |name, value|
+                string += value
+            end
+
+            return string
+        end
     end
 end
