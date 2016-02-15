@@ -65,8 +65,16 @@ describe NFE::Detail do
 
             context "with valid fields" do
                 it "returns a populated Hash of field name/value" do
-                    expect((NFE::Detail::new << {aliquot: "01", taker_type: "1"}).empty?)                       .to be false
-                    expect((NFE::Detail::new << {amount: "0015", tax_amount: "0", iss_by: "3"}).empty?)         .to be false
+                    expect((NFE::Detail::new << {
+                        rps_number: "3",
+                        amount: "10",
+                        tax_amount: "0",
+                        service_code: "12345",
+                        aliquot: "0",
+                        iss_by: "1",
+                        taker_type: "1",
+                        taker_document: "43896729837"
+                    }).empty?).to be false
                 end
             end
         end
@@ -76,11 +84,17 @@ describe NFE::Detail do
         it "return whether the register is valid (contains required fields)" do
             detail = NFE::Detail.new
             expect(detail.valid?).to be false
-            detail << {aliquot: "002", taker_type: "1", taker_document: "43896729837"}
+            detail << {
+                rps_number: "3",
+                amount: "10",
+                tax_amount: "0",
+                service_code: "12345",
+                aliquot: "0",
+                iss_by: "1",
+                taker_type: "1",
+            }
             expect(detail.valid?).to be false
-            detail << {rps_number: "1", amount: "100", tax_amount: "0", service_code: "06298"}
-            expect(detail.valid?).to be false
-            detail << {iss_by: "1"}
+            detail << {taker_document: "43896729837", rps_status: "t"}
             expect(detail.valid?).to be true
 
             #using DEFAUTLS
@@ -122,6 +136,51 @@ describe NFE::Detail do
                 rps_status: "B"
             }
             expect(detail.valid?).to be false
+            detail << { city_ibge_code: "12345" }
+            #puts detail.to_hash
+            expect(detail.valid?).to be true
+        end
+    end
+
+    describe "#to_hash" do
+        it "returns an Hash" do
+            detail = NFE::Detail.new
+            detail << {
+                rps_number: "2",
+                amount: "1",
+                tax_amount: "0",
+                service_code: "06298",
+                aliquot: "0",
+                iss_by: "1",
+                taker_type: "2",
+                taker_document: "43896729837",
+                rps_status: "A"
+            }
+            expect(detail.to_hash).to be_an Hash
+        end
+    end
+
+    describe "#to_s" do
+        context "with valid Detail" do
+            it "returns a String" do
+                detail = NFE::Detail.new
+                detail << {
+                    rps_number: "2",
+                    amount: "1",
+                    tax_amount: "0",
+                    service_code: "06298",
+                    aliquot: "0",
+                    iss_by: "1",
+                    taker_type: "1",
+                    taker_document: "43896729837",
+                    rps_status: "T"
+                }
+                expect(detail.to_s).to be_an String
+            end
+        end
+
+        context "with invalid Detail" do
+            it "raises InvalidRegisterError"
         end
     end
 end

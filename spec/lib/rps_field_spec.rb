@@ -5,7 +5,6 @@ describe NFE::RPSField do
         context "with no parameters or not only two paremeters" do
             it "raises an ArgumentError" do
                 expect{ NFE::RPSField.new }           .to raise_error ArgumentError
-                expect{ NFE::RPSField.new String.new }.to raise_error ArgumentError
             end
         end
 
@@ -27,7 +26,8 @@ describe NFE::RPSField do
         context "with valid parameters" do
             it "returns a NFE::RPSField object" do
                 expect(NFE::RPSField.new "field", "value").to be_an NFE::RPSField
-                expect(NFE::RPSField.new :field, "value").to be_an NFE::RPSField
+                expect(NFE::RPSField.new :field, "value") .to be_an NFE::RPSField
+                expect(NFE::RPSField.new :field)          .to be_an NFE::RPSField
             end
         end
     end
@@ -124,6 +124,17 @@ describe NFE::RPSField do
                 expect((NFE::RPSField.new :service_description, "!!!! 99motos").valid?)     .to be false
                 expect((NFE::RPSField.new :taker_email, "julia.birkett").valid?)            .to be false
             end
+        end
+    end
+
+    describe "#default_char" do
+        it "returns the RPSField default char" do
+            field = NFE::RPSField.new :taker_email
+            expect(field.default_char).to be_eql " "
+            field = NFE::RPSField.new :cei
+            expect(field.default_char).to be_eql "0"
+            field = NFE::RPSField.new :service_description
+            expect(field.default_char).to be_eql " "
         end
     end
 end

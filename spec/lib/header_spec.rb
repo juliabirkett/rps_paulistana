@@ -74,10 +74,20 @@ describe NFE::Header do
     end
 
     describe "#to_s" do
-        it "returns a String" do
-            header = NFE::Header.new
-            header << {layout_version: "001"}
-            expect(header.to_s).to be_an String
+        context "with valid Header" do
+            it "returns a String" do
+                header = NFE::Header.new
+                header << {municipal_registration: "12345678"}
+                expect(header.to_s).to be_an String
+            end
+        end
+
+        context "with invalid Header" do
+            it "raises InvalidRegisterError" do
+                header = NFE::Header.new
+                header << {layout_version: "001"}
+                expect{header.to_s}.to raise_error NFE::Errors::InvalidRegisterError
+            end
         end
     end
 end
