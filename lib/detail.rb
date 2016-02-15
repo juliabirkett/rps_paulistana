@@ -51,13 +51,12 @@ module NFE
             :cei,
             :matriculation,
             :city_ibge_code,
-            :service_description,
+            :service_description
         ]
 
         DEFAULTS = {
             rps_type: "RPS",
             issuing_date: Time.now.to_date.strftime("%Y%m%d"),
-            rps_status: "T",
             service_description: "Agenciamento de motoboy realizados através da plataforma 99motos"
         }
 
