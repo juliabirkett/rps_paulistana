@@ -11,10 +11,10 @@ module NFE
         def validate!
             raise Errors::InvalidParamError, /Parameter name must be String or Symbol/  if !@name .is_a? String and !@name.is_a? Symbol
             raise Errors::InvalidParamError, /Parameter value must be String/           if !@value.is_a? String
-            raise Errors::InvalidParamError                                             if  @name.empty? or @value.empty?
+            raise Errors::InvalidParamError                                             if  @name.empty?
         end
 
-        def initialize name, value
+        def initialize name, value = " "
             @name      = name
             @value     = value
             @auto_fill = true
@@ -44,6 +44,9 @@ module NFE
             when :rps_number, :matriculation
                 @size = 12
                 @type = Type::NUM
+            when :municipal_registration
+                @size = 8
+                @type = Type::NUM
             when :taker_name
                 @size = 75
                 @type = Type::ALPHA
@@ -69,18 +72,23 @@ module NFE
                 @size = 3
                 @type = Type::NUM
                 @auto_fill = false
-            when :municipal_registration, :start_date, :end_date, :issuing_date, :taker_ccm, :zip_code
+            when :start_date, :end_date, :issuing_date, :taker_ccm
                 @size = 8
                 @type = Type::NUM
                 @auto_fill = false
+            when :zip_code
+                @size = 8
+                @type = Type::NUM
             when :state_registration, :cei
                 @size = 12
                 @type = Type::NUM
-                @auto_fill = false
-            when :service_code, :tributary_percentage
+            when :service_code
                 @size = 5
                 @type = Type::NUM
                 @auto_fill = false
+            when :tributary_percentage
+                @size = 5
+                @type = Type::NUM
             when :iss_by, :taker_type
                 @size = 1
                 @type = Type::NUM
@@ -88,7 +96,6 @@ module NFE
             when :city_ibge_code
                 @size = 7
                 @type = Type::NUM
-                @auto_fill = false
             when :rps_status
                 @size = 1
                 @type = Type::ALPHA
@@ -96,23 +103,28 @@ module NFE
             when :uf
                 @size = 2
                 @type = Type::ALPHA
-                @auto_fill = false
+            end
+        end
+
+        def default_char
+            case @type
+                when Type::NUM
+                    return "0"
+                else
+                    return " "
             end
         end
 
         def valid?
-            valid = true
-            char = " "
             if @type.eql? Type::ALPHA
                 valid = self.alphanumeric?
             elsif @type.eql? Type::EMAIL
                 valid = self.email?
             elsif @type.eql? Type::NUM
                 valid = self.numeric?
-                char = "0"
             end
 
-            self.fill_with! char if @auto_fill == true
+            self.fill!  if @auto_fill == true
             return (valid and self.length == @size)
         end
 
@@ -148,23 +160,23 @@ module NFE
         end
 
         def numeric?
-            return @value.match(/^[0-9]+$/) != nil
+            return (@value.match(/^[0-9]+$/) != nil or @value.to_i == 0)
         end
 
         def email?
-            return @value.match(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i) != nil
+            return (@value.match(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i) != nil or @value.eql? " ")
         end
 
         def length
             return @value.length
         end
 
-        def fill_with! char
+        def fill!
             while self.length < @size do
-                if char.eql? "0"
-                    @value = char + @value
+                if self.default_char.eql? "0"
+                    @value = self.default_char + @value
                 else
-                    @value << char
+                    @value << self.default_char
                 end
             end
         end
