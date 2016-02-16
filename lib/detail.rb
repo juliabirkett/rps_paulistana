@@ -56,8 +56,7 @@ module NFE
 
         DEFAULTS = {
             rps_type: "RPS",
-            issuing_date: Time.now.to_date.strftime("%Y%m%d"),
-            service_description: "Agenciamento de motoboy realizados através da plataforma 99motos"
+            issuing_date: Time.now.to_date.strftime("%Y%m%d")
         }
 
         def initialize
