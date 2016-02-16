@@ -28,7 +28,7 @@ module NFE
             :iss_by,
             :taker_type,
             :taker_document,
-            :municipal_registration,
+            :taker_ccm,
             :state_registration,
             :taker_name,
             :address_type,
