@@ -85,7 +85,7 @@ module NFE
                 string += self.to_hash[field_name]
             end
 
-            return string
+            return "#{string}\n"
         end
     end
 end
