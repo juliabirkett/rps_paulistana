@@ -44,7 +44,7 @@ module NFE
             when :rps_number, :matriculation
                 @size = 12
                 @type = Type::NUM
-            when :municipal_registration
+            when :taker_ccm
                 @size = 8
                 @type = Type::NUM
             when :taker_name
@@ -72,7 +72,7 @@ module NFE
                 @size = 3
                 @type = Type::NUM
                 @auto_fill = false
-            when :start_date, :end_date, :issuing_date, :taker_ccm
+            when :start_date, :end_date, :issuing_date, :municipal_registration
                 @size = 8
                 @type = Type::NUM
                 @auto_fill = false
@@ -124,7 +124,7 @@ module NFE
                 valid = self.numeric?
             end
 
-            self.fill!  if @auto_fill == true
+            self.fill! if @auto_fill == true
             return (valid and self.length == @size)
         end
 
@@ -160,7 +160,7 @@ module NFE
         end
 
         def numeric?
-            return (@value.match(/^[0-9]+$/) != nil or @value.to_i == 0)
+            return (@value.match(/^[0-9]+$/) != nil or @value.eql? " ")
         end
 
         def email?
