@@ -81,8 +81,8 @@ module NFE
         def to_s
             raise Errors::InvalidRegisterError, /The register could not be converted to String because it is not valid/     if !self.valid?
             string = @type.to_s
-            self.to_hash.each do |name, value|
-                string += value
+            self.class::VALID_FIELDS.each do |field_name|
+                string += self.to_hash[field_name]
             end
 
             return string
