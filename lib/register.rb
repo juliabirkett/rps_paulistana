@@ -5,8 +5,7 @@ module NFE
         VALID_FIELDS    = []
         DEFAULTS  = {}
 
-        attr_reader :fields
-        attr_reader :type
+        attr_reader   :fields, :type, :required_fields
 
         def validate!
             if !@type.is_a? String and !@type.is_a? Integer
@@ -19,14 +18,15 @@ module NFE
         end
 
         def initialize type
-            @type = type
-            @fields = Array.new
+            @type            = type
+            @fields          = Array.new
+            @required_fields = Array.new(self.class::REQUIRED_FIELDS)
             validate!
         end
 
         def valid?
             set_non_filled
-            return (self.class::REQUIRED_FIELDS - self.to_hash.keys).empty?
+            return (@required_fields - self.to_hash.keys).empty?
         end
 
         def valid_register_field? name
@@ -56,7 +56,7 @@ module NFE
         end
 
         private def set_non_filled
-            non_filled = (self.class::VALID_FIELDS - self.class::REQUIRED_FIELDS) - self.to_hash.keys
+            non_filled = (self.class::VALID_FIELDS - @required_fields) - self.to_hash.keys
 
             non_filled.each do |field_name|
                 field = RPSField.new field_name
