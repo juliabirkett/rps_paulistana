@@ -30,14 +30,19 @@ module NFE
         end
 
         def to_s
-            puts @header.to_s
+            string = @header.to_s
             @details.each do |detail|
-                puts detail.to_s
+                string += detail.to_s
             end
-            puts @footer.to_s
+            string += @footer.to_s
+
+            return string
         end
 
         def save_to_file
+            file = File.new("rps_test.txt", "w")
+            file.write(self.to_s)
+            file.close
         end
     end
 end
