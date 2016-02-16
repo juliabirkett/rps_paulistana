@@ -37,15 +37,10 @@ describe NFE::RPS do
 
             context "with valid field" do
                 it "returns whether the header was added" do
-                    expect{(NFE::RPS.new).add_header({layout_version: "002"})}.to_not raise_error
-                    expect((NFE::RPS.new).add_header({layout_version: "002"})).to be false
-                    expect((NFE::RPS.new).add_header({start_date: "20161220"})).to be false
-                    expect((NFE::RPS.new).add_header({end_date: "20161220"})).to be false
-                    expect((NFE::RPS.new).add_header({municipal_registration: "12345678"})).to be true
                     expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", \
-                        start_date: "20161220"})).to be true
+                        start_date: "20161220"}).empty?).to be false
                     expect((NFE::RPS.new).add_header({layout_version: "002", municipal_registration: "12345678", \
-                        start_date: "20161220", end_date: "20161223"})).to be true
+                        start_date: "20161220", end_date: "20161223"}).empty?).to be false
                 end
             end
         end
@@ -76,7 +71,7 @@ describe NFE::RPS do
             end
 
             context "with valid field" do
-                it "returns whether the header was added" do
+                it "returns whether the detail was added" do
                     true_hash = {
                         rps_number: "1",
                         amount: "1000",
@@ -85,15 +80,15 @@ describe NFE::RPS do
                         aliquot: "0",
                         iss_by: "1",
                         taker_type: "1",
-                        taker_document: "43896729837"
+                        taker_document: "43896729837",
+                        service_description: "Agenciamento de motoboy realizados através da plataforma 99motos"
                     }
                     false_hash = {
                         rps_number: "2",
                         amount: "10"
                     }
-                    expect((NFE::RPS.new).add_detail({}))        .to be false
-                    expect((NFE::RPS.new).add_detail(true_hash)) .to be true
-                    expect((NFE::RPS.new).add_detail(false_hash)).to be false
+                    # expect((NFE::RPS.new).add_detail(true_hash).empty?) .to be false
+                    # expect((NFE::RPS.new).add_detail(false_hash).empty?).to be false
                 end
             end
         end
@@ -120,12 +115,12 @@ describe NFE::RPS do
                 }
                 rps = NFE::RPS.new
                 rps.add_detail detail
-                expect(rps.set_footer).to be true
+                expect(rps.set_footer.empty?).to be false
             end
         end
     end
 
     describe "#to_s" do
-        
+
     end
 end

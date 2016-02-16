@@ -92,6 +92,7 @@ describe NFE::Detail do
                 aliquot: "0",
                 iss_by: "1",
                 taker_type: "1",
+                service_description: "Agenciamento de motoboy realizados através da plataforma 99motos"
             }
             expect(detail.valid?).to be false
             detail << {taker_document: "43896729837", rps_status: "t"}
@@ -108,7 +109,8 @@ describe NFE::Detail do
                 iss_by: "1",
                 taker_type: "2",
                 taker_document: "43896729837",
-                rps_status: "A"
+                rps_status: "A",
+                service_description: "Agenciamento de motoboy realizados através da plataforma 99motos"
             }
             #false because taker_type is 2 and requires more fields
             expect(detail.valid?).to be false
@@ -133,11 +135,12 @@ describe NFE::Detail do
                 iss_by: "1",
                 taker_type: "1",
                 taker_document: "43896729837",
-                rps_status: "B"
+                rps_status: "B",
+                service_description: "Agenciamento de motoboy realizados através da plataforma 99motos"
             }
+            #false because the rps_status is B and needs city_ibge_code
             expect(detail.valid?).to be false
             detail << { city_ibge_code: "12345" }
-            #puts detail.to_hash
             expect(detail.valid?).to be true
         end
     end
@@ -173,14 +176,19 @@ describe NFE::Detail do
                     iss_by: "1",
                     taker_type: "1",
                     taker_document: "43896729837",
-                    rps_status: "T"
+                    rps_status: "T",
+                    service_description: "Agenciamento de motoboy realizados através da plataforma 99motos"
                 }
                 expect(detail.to_s).to be_an String
             end
         end
 
         context "with invalid Detail" do
-            it "raises InvalidRegisterError"
+            it "raises InvalidRegisterError" do
+                detail = NFE::Detail.new
+                detail << {taker_ccm: "12345678"}
+                expect{detail.to_s}.to raise_error NFE::Errors::InvalidRegisterError
+            end
         end
     end
 end

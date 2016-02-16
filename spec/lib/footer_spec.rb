@@ -61,10 +61,20 @@ describe NFE::Footer do
     end
 
     describe "#to_s" do
-        it "returns a String" do
-            footer = NFE::Footer.new
-            footer << {total_amount: "0", total_tax_amount: "9"}
-            expect(footer.to_s).to be_an String
+        context "with valid Footer" do
+            it "returns a String" do
+                footer = NFE::Footer.new
+                footer << {total_amount: "0", total_tax_amount: "9"}
+                expect(footer.to_s).to be_an String
+            end
+        end
+
+        context "with invalid Footer" do
+            it "raises InvalidRegisterError" do
+                footer = NFE::Footer.new
+                footer << {total_detail_lines: "1"}
+                expect{footer.to_s}.to raise_error NFE::Errors::InvalidRegisterError
+            end
         end
     end
 end
