@@ -10,12 +10,18 @@ module NFE
 
         def add_header fields
             @header << fields
+            raise Errors::InvalidHeaderError, /Invalid Header: #{@header.to_hash}/      if !@header.valid?
+            return @header.fields
         end
 
         def add_detail fields
             detail = Detail.new
             detail << fields
-            @details << detail  if detail.valid?
+            if detail.valid?
+                @details << detail
+            else
+                raise Errors::InvalidDetailError, /Invalid Detail: #{detail.to_hash}/
+            end
         end
 
         def set_footer

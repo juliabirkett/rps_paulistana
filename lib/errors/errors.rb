@@ -9,6 +9,7 @@ module NFE
         class TakerTypeError       < StandardError; end
         class NonExistentFieldError< StandardError; end
         class InvalidFieldError    < StandardError; end
-        class InvalidRegisterError < StandardError; end
+        class InvalidDetailError   < StandardError; end
+        class InvalidHeaderError   < StandardError; end
     end
 end
