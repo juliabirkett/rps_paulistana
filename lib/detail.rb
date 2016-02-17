@@ -51,6 +51,7 @@ module NFE
             :cei,
             :matriculation,
             :city_ibge_code,
+            :private_blank_field,
             :service_description
         ]
 

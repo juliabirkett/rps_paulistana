@@ -47,6 +47,9 @@ module NFE
             when :taker_ccm
                 @size = 8
                 @type = Type::NUM
+            when :private_blank_field
+                @size = 200
+                @type = Type::ALPHA
             when :taker_name
                 @size = 75
                 @type = Type::ALPHA
