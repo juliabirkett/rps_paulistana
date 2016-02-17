@@ -69,12 +69,14 @@ module NFE
             if fields_hash[:taker_type].eql? "2"
                @required_fields.concat([
                    :taker_name,
+                   :taker_email,
                    :address_type,
                    :address,
                    :address_number,
                    :district,
                    :city,
                    #:uf,
+                   :zip_code
                ])
            end
 
