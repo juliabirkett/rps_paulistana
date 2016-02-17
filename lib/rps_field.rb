@@ -14,7 +14,7 @@ module NFE
             raise Errors::InvalidParamError                                             if  @name.empty?
         end
 
-        def initialize name, value = " "
+        def initialize name, value = ""
             @name      = name
             @value     = value
             @auto_fill = true
@@ -119,12 +119,17 @@ module NFE
         end
 
         def valid?
-            if @type.eql? Type::ALPHA
-                valid = self.alphanumeric?
-            elsif @type.eql? Type::EMAIL
-                valid = self.email?
-            elsif @type.eql? Type::NUM
-                valid = self.numeric?
+            if @value.empty?
+                valid = true
+            else
+                case @type
+                when Type::ALPHA
+                    valid = self.alphanumeric?
+                when Type::EMAIL
+                    valid = self.email?
+                when Type::NUM
+                    valid = self.numeric?
+                end
             end
 
             self.fill! if @auto_fill == true
@@ -163,11 +168,11 @@ module NFE
         end
 
         def numeric?
-            return (@value.match(/^[0-9]+$/) != nil or @value.eql? " ")
+            return @value.match(/^[0-9]+$/) != nil
         end
 
         def email?
-            return (@value.match(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i) != nil or @value.eql? " ")
+            return @value.match(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i) != nil
         end
 
         def length
