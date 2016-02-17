@@ -81,13 +81,5 @@ describe NFE::Header do
                 expect(header.to_s).to be_an String
             end
         end
-
-        context "with invalid Header" do
-            it "raises InvalidRegisterError" do
-                header = NFE::Header.new
-                header << {layout_version: "001"}
-                expect{header.to_s}.to raise_error NFE::Errors::InvalidRegisterError
-            end
-        end
     end
 end

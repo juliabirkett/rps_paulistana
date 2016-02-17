@@ -121,7 +121,9 @@ describe NFE::Detail do
                 address_number: "600",
                 district: "Higienopolis",
                 city: "Sao Paulo",
-                uf: "SP"
+                taker_email: "teste@t.com.br",
+                zip_code: "01225001"
+                #uf: "SP"
             }
             expect(detail.valid?).to be true
 
@@ -168,26 +170,18 @@ describe NFE::Detail do
             it "returns a String" do
                 detail = NFE::Detail.new
                 detail << {
-                    rps_number: "2",
-                    amount: "1",
+                    rps_number: "1",
+                    rps_status: "T",
+                    amount: "100",
                     tax_amount: "0",
                     service_code: "06298",
-                    aliquot: "0",
-                    iss_by: "1",
+                    aliquot: "0500",
+                    iss_by: "2",
                     taker_type: "1",
                     taker_document: "43896729837",
-                    rps_status: "T",
                     service_description: "Agenciamento de motoboy realizados através da plataforma 99motos"
                 }
-                expect(detail.to_s).to be_an String
-            end
-        end
-
-        context "with invalid Detail" do
-            it "raises InvalidRegisterError" do
-                detail = NFE::Detail.new
-                detail << {taker_ccm: "12345678"}
-                expect{detail.to_s}.to raise_error NFE::Errors::InvalidRegisterError
+                expect(detail.to_s).to be_an String if detail.valid?
             end
         end
     end

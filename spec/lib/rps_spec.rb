@@ -103,18 +103,8 @@ describe NFE::RPS do
 
         context "without parameters" do
             it "returns whether the Footer is valid" do
-                detail = {
-                    rps_number: "1",
-                    amount: "1000",
-                    tax_amount: "0",
-                    service_code: "12345",
-                    aliquot: "0",
-                    iss_by: "1",
-                    taker_type: "2",
-                    taker_document: "43896729837"
-                }
                 rps = NFE::RPS.new
-                rps.add_detail detail
+                rps.set_footer
                 expect(rps.set_footer.empty?).to be false
             end
         end
