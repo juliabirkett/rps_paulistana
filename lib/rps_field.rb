@@ -66,7 +66,7 @@ module NFE
                 @size = 30
                 @type = Type::ALPHA
             when :service_description
-                @size = 95
+                @size = @value.length
                 @type = Type::ALPHA
             when :rps_type, :rps_serial
                 @size = 5
