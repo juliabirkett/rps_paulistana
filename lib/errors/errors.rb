@@ -11,5 +11,6 @@ module NFE
         class InvalidFieldError    < StandardError; end
         class InvalidDetailError   < StandardError; end
         class InvalidHeaderError   < StandardError; end
+        class InvalidRPSError      < StandardError; end
     end
 end
