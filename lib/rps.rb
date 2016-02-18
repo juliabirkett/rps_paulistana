@@ -53,10 +53,13 @@ module NFE
             end
         end
 
-        def save_to_file
-            file = File.new("rps_test.txt", "w")
-            file.write(self.to_s)
+        def save_to_file path = "./"
+            filename = "#{path}/RPS_#{@details.first.to_hash[:issuing_date]}.txt"
+            file = File.new(filename, "w")
+            saved = file.write(self.to_s)
             file.close
+
+            return filename if saved
         end
     end
 end
