@@ -35,14 +35,22 @@ module NFE
             @footer << {total_detail_lines: @details.count.to_s, total_amount: total_amount.to_s, total_tax_amount: total_tax_amount.to_s}
         end
 
-        def to_s
-            string = @header.to_s
-            @details.each do |detail|
-                string += detail.to_s
-            end
-            string += @footer.to_s
+        def valid?
+            return (@header.valid? and @details.count and @footer.valid?)
+        end
 
-            return string
+        def to_s
+            if self.valid?
+                string = @header.to_s
+                @details.each do |detail|
+                    string += detail.to_s
+                end
+                string += @footer.to_s
+
+                return string
+            else
+                raise Errors::InvalidRPSError
+            end
         end
 
         def save_to_file
