@@ -8,7 +8,7 @@ Abaixo, segue tabela comparativa dos nomes dos campos utilizados no desenvolvime
 
 ### Registro Tipo 1 - Cabeçalho
 
-| Nome do campo na Gem             | Nome do campo no Manual |
+| Nome do campo no Manual             | Nome do campo na Gem |
 | :------------------:             | :---------------------: |
 | Versão do Arquivo                | layout_version          |
 | Inscrição Municipal do Prestador | municipal_registration  |
@@ -17,7 +17,7 @@ Abaixo, segue tabela comparativa dos nomes dos campos utilizados no desenvolvime
 
 ### Registro Tipo 6 - Detalhe
 
-| Nome do campo na Gem             | Nome do campo no Manual |
+| Nome do campo no Manual             | Nome do campo na Gem |
 | :------------------:             | :---------------------: |
 | Tipo de RPS                | rps_type          |
 | Série do RPS | rps_serial  |
@@ -63,11 +63,17 @@ Abaixo, segue tabela comparativa dos nomes dos campos utilizados no desenvolvime
 | Valor total dos serviços no arquivo | total_amount |
 | Valor total das deduções no arquivo | total_tax_amount |
 
+## Input
+Basicamente, você deve instanciar uma RPS e invocar os métodos add_header e add_detail. Ambos exigem um Hash com os campos como parâmetro, e possuem validações específicas que podem ser verificadas nos testes.
+
+
 ## Output
 Esta gem suporta dois tipos de output:
 
-1. Exibir o resultado da RPS na tela - chamando a função to_s.
-2. Salvar o resultado da RPS num arquivo - chamando a função save_to_file.
+1. Exibir o resultado da RPS na tela - chamando o método to_s.
+2. Salvar o resultado da RPS num arquivo - chamando o método save_to_file.
+
+*OBS.: o método save_to_file pode receber um parâmetro que indica o caminho de onde o arquivo RPS será salvo.*
 
 ## Exemplo
 
