@@ -65,6 +65,7 @@ Abaixo, segue tabela comparativa dos nomes dos campos utilizados no desenvolvime
 
 ## Output
 Esta gem suporta dois tipos de output:
+
 1. Exibir o resultado da RPS na tela - chamando a função to_s.
 2. Salvar o resultado da RPS num arquivo - chamando a função save_to_file.
 
