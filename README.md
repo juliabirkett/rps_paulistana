@@ -1,7 +1,9 @@
 # rps_paulistana
 
 Esta gem tem como objetivo gerar arquivos RPS (Recibo Provisório de Serviços), que são utilizados para geração de Nota Fiscal Paulistana em lote. Tais arquivos são de registro fixo e devem seguir um layout disponibilizado pela Prefeitura de São Paulo.
+
 O layout utilizado nesta primeira versão foi o V.002, e o manual utilizado está [disponível aqui.](http://nfpaulistana.prefeitura.sp.gov.br/arquivos/manual/NFe_Layout_RPS.pdf)
+
 Futuramente daremos suportes a outras versões, mas, até o momento, a gem suporta a versão mais atual do manual da Prefeitura.
 
 Abaixo, segue tabela comparativa dos nomes dos campos utilizados no desenvolvimento:
