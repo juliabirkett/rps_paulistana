@@ -81,7 +81,7 @@ Esta gem suporta dois tipos de output:
 
 ```ruby
 rps = NFE::RPS.new
-rps.add_header(header = {municipal_registration: "46923700"})
+rps.add_header({municipal_registration: "46923700"})
 rps.add_detail({
     rps_number: "1",
     rps_status: "T",
